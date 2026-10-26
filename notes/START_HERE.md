@@ -14,12 +14,12 @@
 
 ## எப்படி படிக்க வேண்டும்?
 
-- முதல் முறையாக: `01_Computer_Networking_22_Topics/01_Networking_Fundamentals/README.md` தொடங்கு.
+- முதல் முறையாக: `02_Computer_Networking/01_Networking_Fundamentals/README.md` தொடங்கு.
 - ஒரு chapter-க்கு: `README` → `01_...md` முதல் அனைத்து subtopics → `98_Practice_Lab.md` → `99_Quiz_Answers.md`.
-- IP investigation track-க்கு: `03_IP_Tracking_IP_Tracing_Remote_Activity_Analysis/README.md`.
-- Malware track-க்கு: `02_Virus_Malware_Introduction_Analysis_Defense/README.md`.
-- Lab setup: `04_Study_Resources/SAFE_LAB_SETUP.md`. 16-week roadmap: `04_Study_Resources/16_WEEK_STUDY_PLAN.md`.
-- **Original uploads unchanged**: `00_Original_Uploaded_Notes_Unchanged/`. இதில் உள்ள 17 Tools files மற்றும் 2 intro/command files reference-க்காக மட்டும். New notes மற்றும் source notes கலக்கப்படவில்லை.
+- IP investigation track-க்கு: `04_IP_Investigation/README.md`.
+- Malware track-க்கு: `03_Malware_Analysis_Defense/README.md`.
+- Lab setup: `05_Study_Resources/SAFE_LAB_SETUP.md`. 16-week roadmap: `05_Study_Resources/16_WEEK_STUDY_PLAN.md`.
+- **Original uploaded notes**: `00_Kali_Lab_Basics/` (intro + commands) மற்றும் `01_Kali_Tools/` (17 tools). Content மாற்றப்படவில்லை; file names மட்டும் மாற்றப்பட்டன.
 
 ## Learning technique: the 5-question rule
 

@@ -37,7 +37,7 @@
 * **`nano filename.txt`** : எளிய Text Editor-ஐத் திறந்து கோப்பைத் திருத்தும் (Package: `nano`, பொதுவாக Pre-installed).
 * **`chmod +x script.sh`** : ஸ்கிரிப்ட் கோப்புக்கு இயக்கும் அனுமதியை (Executable Permission) வழங்கும்.
 
-> இன்னும் விரிவான அடிப்படை Linux Commands (Process Monitoring, Package Management, Compression, User Management போன்றவை) `Testing commands.md` கோப்பின் **Section 0: Essential Linux Commands**-ல் முழுமையாகக் கொடுக்கப்பட்டுள்ளது.
+> இன்னும் விரிவான அடிப்படை Linux Commands (Process Monitoring, Package Management, Compression, User Management போன்றவை) [`02_Testing_Commands.md`](02_Testing_Commands.md) கோப்பின் **Section 0: Essential Linux Commands**-ல் முழுமையாகக் கொடுக்கப்பட்டுள்ளது.
 
 ---
 
@@ -48,7 +48,7 @@
 * **`nmap 192.168.1.1`** : அடிப்படை IP ஸ்கேன் (Basic IP Scan).
 * **`nmap -A -v 192.168.1.100`** : விரிவான OS மற்றும் சேவை பதிப்பு ஸ்கேன் (Detailed OS and Service Version Scan).
 
-> Nmap-ஐப் பற்றிய முழுமையான Command Reference `Attacks/Nmap.md` கோப்பில் உள்ளது.
+> Nmap-ஐப் பற்றிய முழுமையான Command Reference [`01_Kali_Tools/03_Nmap.md`](../01_Kali_Tools/03_Nmap.md) கோப்பில் உள்ளது.
 
 ---
 

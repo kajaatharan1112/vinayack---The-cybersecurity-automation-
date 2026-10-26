@@ -1,6 +1,6 @@
 # Existing Uploaded Notes vs Newly Written Modules
 
-The uploaded Markdown files are **your existing notes**. To prevent losing or silently rewriting them, exact copies are preserved in `00_Original_Uploaded_Notes_Unchanged/`.
+The uploaded Markdown files are **your existing notes**. To prevent losing or silently rewriting them, they now live in `00_Kali_Lab_Basics/` and `01_Kali_Tools/` (renamed only, content unchanged; duplicate copies removed).
 
 The newly written 22 networking-topic modules, remote-IP investigation notes, and malware notes are **extensions prepared for this course pack**. They are not falsely labeled as a recovered lecturer handout. Tool-specific original notes are useful supplements; they do not replace networking theory, IP investigation attribution ethics, or malware incident response.
 
