@@ -95,3 +95,22 @@ the main line. Concurrency cancels superseded runs.
 **Why:** User requirement — "Testing automation romba mukiyam ... push panum
 pothum main ikku pipeline run akanum".
 **Status:** Active.
+
+### D-0014 · 2026-10-26 · DeepSeek integration = local OpenAI-compatible runtime adapter
+**Decision:** Integrate DeepSeek through a local-runtime adapter
+(`harness/ai/deepseek_adapter.py`) that calls an OpenAI-style
+`/chat/completions` endpoint served locally (Ollama / llama.cpp / LM Studio),
+using a stdlib-only `urllib` transport. We do NOT vendor a DeepSeek repo; the
+model runs in the operator's own local runtime.
+**Why:** Keeps the harness dependency-free and offline-first; lets the operator
+pick/swap any local DeepSeek-compatible model without changing the harness.
+**Status:** Active. (Resolves the open question in PROJECT_MEMORY §5.)
+
+### D-0015 · 2026-10-26 · Model output is untrusted; parsing fails closed
+**Decision:** The model only proposes; its JSON is parsed defensively and still
+passes through the Policy Engine. Unknown/garbled risk levels fail CLOSED
+(escalated to INTRUSIVE, requiring approval); malformed output raises
+`DeepSeekError` rather than executing.
+**Why:** A model (or prompt injection) must never be able to widen scope or run
+an unapproved operation. Authority stays in the Policy Engine.
+**Status:** Active.
