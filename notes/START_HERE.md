@@ -1,0 +1,56 @@
+# COMPLETE NETWORKING + IP INVESTIGATION + VIRUS/MALWARE NOTES
+
+**University self-study edition • English technical terms + எளிய தமிழ் விளக்கங்கள் • 26 October 2026**
+
+## இந்த ZIP உங்களுக்கு என்ன தருகிறது?
+
+காணாமல் போன University Networking Classes-ஐ **Basics → Advanced → Modern Industry** முறையில் மீண்டும் கற்பதற்காக உருவாக்கப்பட்ட study pack இது. ஒரே நேரத்தில் 3 tracks:
+
+1. **Computer Networking (22 folders):** 22 topic folders; ஒவ்வொரு subtopic-க்கும் ஒரு `.md`, chapter overview, hands-on lab, quiz+answer key.
+3. **IP Tracking / IP Tracing / Remote Network Activity Analysis:** remote IP பற்றிய உண்மையாகக் கிடைக்கும் public information, authorized traffic/log analysis, IP attribution limits.
+2. **Virus & Malware:** malicious software taxonomy, defensive detection, safe malware analysis, incident response and up-to-date enterprise methods.
+
+**முக்கிய குறிப்பு:** இது புதியதாக எழுதப்பட்ட **expanded study notes**. உங்களின் அசல் missing lecture slides-ஐ மீட்டெடுத்ததாகக் கூறவில்லை; எல்லா industry subjects-மும் காலத்திற்கேற்ப வளர்கின்றன. இந்த edition மிக விரிவான coverage தருகிறது; ஆனால் எந்த syllabus-க்கும் நிரந்தர “100%” guarantee இல்லை. Official course outline கிடைத்தால் gap-check செய்யவும்.
+
+## எப்படி படிக்க வேண்டும்?
+
+- முதல் முறையாக: `02_Computer_Networking/01_Networking_Fundamentals/README.md` தொடங்கு.
+- ஒரு chapter-க்கு: `README` → `01_...md` முதல் அனைத்து subtopics → `98_Practice_Lab.md` → `99_Quiz_Answers.md`.
+- IP investigation track-க்கு: `04_IP_Investigation/README.md`.
+- Malware track-க்கு: `03_Malware_Analysis_Defense/README.md`.
+- Lab setup: `05_Study_Resources/SAFE_LAB_SETUP.md`. 16-week roadmap: `05_Study_Resources/16_WEEK_STUDY_PLAN.md`.
+- **Original uploaded notes**: `00_Kali_Lab_Basics/` (intro + commands) மற்றும் `01_Kali_Tools/` (17 tools). Content மாற்றப்படவில்லை; file names மட்டும் மாற்றப்பட்டன.
+
+## Learning technique: the 5-question rule
+
+ஒவ்வொரு concept-க்கும் (1) What? (2) Why? (3) How? (4) Real example? (5) What can go wrong? என்ற 5 பதில்கள் எழுதினால் theory மற்றும் practical இணையும்.
+
+## Scope, safety, privacy
+
+Remote IP address ≠ exact person/location/history. உங்கள் சொந்த அல்லது அனுமதி பெற்ற logs மட்டுமே forensic activity காட்ட முடியும். Malware files-ஐ run செய்வதற்கான instructions இங்கே இல்லை; safe synthetic datasets, defensive observation, evidence-preserving workflows மட்டுமே கொடுக்கப்பட்டுள்ளன.
+
+## Academic workflow
+
+1. படித்த பின் short handwritten note எழுதுங்கள்.
+2. ASCII diagram மூலம் flow வரையுங்கள்.
+3. தன்னுடைய lab-ல் safe tests அல்லது fabricated data கொண்டு observation கொடுங்கள்.
+4. Explanation-ஐ Tamil மற்றும் English technical terms-ல் மீண்டும் சொலுங்கள்.
+5. Exam answer: definition + steps + real-life example + advanced case + limitation.
+
+## Official standards and documentation
+
+- [RFC 1918 Private IPv4](https://www.rfc-editor.org/rfc/rfc1918)
+- [RFC 8200 IPv6](https://www.rfc-editor.org/rfc/rfc8200)
+- [RFC 9293 TCP](https://www.rfc-editor.org/rfc/rfc9293)
+- [RFC 9000 QUIC](https://www.rfc-editor.org/rfc/rfc9000)
+- [RFC 9114 HTTP/3](https://www.rfc-editor.org/rfc/rfc9114)
+- [RFC 9460 DNS SVCB/HTTPS](https://www.rfc-editor.org/rfc/rfc9460)
+- [NIST SP 800-207 Zero Trust Architecture](https://csrc.nist.gov/pubs/sp/800/207/final)
+- [Kubernetes Gateway API Documentation](https://gateway-api.sigs.k8s.io/docs/introduction/)
+- [Cilium eBPF Networking and Service Mesh](https://docs.cilium.io/en/stable/network/servicemesh/index.html)
+- [MITRE ATT&CK Enterprise Tactics](https://attack.mitre.org/tactics/enterprise/)
+- [NIST SP 800-61 Revision 3 (April 2025)](https://csrc.nist.gov/pubs/sp/800/61/r3/final)
+- [APNIC 2026: Geolocation evidence not certainty](https://blog.apnic.net/2026/09/24/ip-geolocation-at-apnic-62-challenges-geofeeds-and-data-quality-perspectives/)
+- [NIST FIPS 203 ML-KEM](https://csrc.nist.gov/pubs/fips/203/final)
+
+> பதிப்புகள், commands, regulations மற்றும் vendor implementation மாறலாம். References verify செய்து production-ல் பயன்படுத்தவும்.

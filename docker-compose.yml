@@ -1,0 +1,27 @@
+# Local dev/run environment for the harness.
+#
+#   docker compose run --rm harness status     # show the status banner
+#   docker compose run --rm harness tools       # list registered tools
+#   docker compose run --rm tests               # run the full test suite
+#
+# The harness service runs with no network by default (network_mode: none),
+# matching the offline-first model. Remove that line only for authorized,
+# scoped network work.
+
+services:
+  harness:
+    build:
+      context: .
+      target: runtime
+    image: cybersecurity-harness:latest
+    network_mode: none          # offline-first: no network unless explicitly enabled
+    read_only: true             # least privilege
+    security_opt:
+      - no-new-privileges:true
+
+  tests:
+    build:
+      context: .
+      target: test
+    image: cybersecurity-harness:test
+    command: ["pytest", "-q"]

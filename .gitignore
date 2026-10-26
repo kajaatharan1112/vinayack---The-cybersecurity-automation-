@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# Test / coverage
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Local harness state (never commit research data)
+*.sqlite
+*.sqlite3
+*.db
+local_state/
+evidence/
+
+# Transfer artifacts
+*.patch
+*.bundle
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
