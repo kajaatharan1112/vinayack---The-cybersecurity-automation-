@@ -7,7 +7,7 @@
 > lives in `logs/` (daily) and `DECISION_LOG.md` (decisions); this file is the
 > distilled state, not the archive.
 
-**Last updated:** 2026-10-26 (Session 5)
+**Last updated:** 2026-10-26 (Session 6)
 
 ---
 
@@ -32,8 +32,14 @@ per-customer enterprise/government licensing. Full detail:
 - **What works now:** offline-first harness lifecycle, the **authoritative Policy
   Engine** (scope/risk/approval/network/emergency-stop), append-only audit log,
   tool registry, AI model-adapter interface + offline stub + **DeepSeek adapter
-  scaffold** (offline fallback; real inference not wired yet), and a terminal CLI.
-  Verified: ruff clean, mypy clean, **37 pytest tests pass**.
+  scaffold** (offline fallback; real inference not wired yet), a terminal CLI,
+  and a new **Tool Center**: a 27-tool JSON **catalog** (all 22 note tools +
+  open-source extras), a **ToolManager** that probes installed binaries and runs
+  a **policy-gated one-click sync** (dry-run default, network-gated, argv-only,
+  audited; offensive tools never auto-touched), a **local Web UI** (stdlib,
+  127.0.0.1, "Update all connected tools" button), and an **auto-update script**
+  (`scripts/update_tools.py`, clones git upstreams into gitignored `vendor/`).
+  Verified: ruff clean, mypy clean, **59 pytest tests pass**.
 - **Architecture:** finalized in `project/architecture/COMPONENT_ARCHITECTURE.md`.
 - **Automation:** CI runs ruff + mypy + pytest on **every push** (py3.11/3.12);
   Docker build + offline smoke test gates **main**.
@@ -68,6 +74,8 @@ Highlights:
 - **Testing mandatory (pytest); every module has tests.** *(D-0011)*
 - **Docker + docker-compose; multi-stage, non-root runtime.** *(D-0012)*
 - **CI = GitHub Actions on every push; Docker build gates main.** *(D-0013)*
+- **Tool integration = data-driven catalog + policy-gated one-click sync; offensive
+  tools are manual-review/lab-only and never auto-cloned or auto-updated.** *(D-0014)*
 
 ## 5. Open questions / not yet decided
 
@@ -91,6 +99,7 @@ Highlights:
 | Daily work logs | `project/memory/logs/YYYY-MM-DD.md` |
 | How to use/update memory | `CLAUDE.md` (repo root) |
 | Harness code | `harness/` · tests in `tests/` · CI in `.github/workflows/` |
+| Tool catalog + Web UI + updater | `resources/tools/catalog.json` · `harness/tools/` · `harness/interfaces/webui.py` · `scripts/update_tools.py` · doc: `project/TOOL_CENTER.md` |
 | Study notes (do not disturb) | `notes/` |
 
 ## 7. Next engineering priorities
@@ -100,12 +109,19 @@ lifecycle · ✅ authorization/policy system · ✅ tool registry skeleton · �
 terminal UI (basic) · ✅ Docker + CI + tests environment · ✅ DeepSeek adapter
 scaffold.
 
+**Done (Session 6):** ✅ Tool Center — 27-tool catalog · ToolManager probe +
+policy-gated one-click sync · local Web UI · auto-update script · 59 tests pass.
+
 **Next:**
 1. Decide DeepSeek integration path (vendor vs local-runtime adapter) — needs user.
-2. SQLite persistence for audit log + projects + scope (currently in-memory).
+2. SQLite persistence for audit log + projects + scope (currently in-memory) —
+   also persist Tool Center sync history.
 3. First **IP intelligence engine** (the MVP research module).
-4. **Tool plugin contract** — formal input/output schema + execution adapter.
-5. Sandboxed **execution runtime** (process/container isolation).
-6. **MCP server** (localhost, authenticated).
-7. Rust/Assembly native engine interface + first ARM64/x86-64 module.
-8. Pick primary OS + set up ASM dev environments.
+4. **Tool plugin contract** — formal input/output schema + execution adapter
+   (build real per-tool adapters behind a Job Engine; catalog already lists them).
+5. **Web Scraping Studio** module — schema + template already in `resources/scraper/`
+   (user-provided); implement validator/preview next.
+6. Sandboxed **execution runtime** (process/container isolation).
+7. **MCP server** (localhost, authenticated).
+8. Rust/Assembly native engine interface + first ARM64/x86-64 module.
+9. Pick primary OS + set up ASM dev environments.

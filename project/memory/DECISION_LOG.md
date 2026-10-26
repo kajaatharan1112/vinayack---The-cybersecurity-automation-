@@ -95,3 +95,21 @@ the main line. Concurrency cancels superseded runs.
 **Why:** User requirement — "Testing automation romba mukiyam ... push panum
 pothum main ikku pipeline run akanum".
 **Status:** Active.
+
+### D-0014 · 2026-10-26 · Tool integration = data-driven catalog + policy-gated sync (no blind clone/auto-update of offensive tools)
+**Decision:** Tools from the notes + open-source extras are integrated via a
+JSON **catalog** (`resources/tools/catalog.json`) loaded by `harness/tools/`.
+A `ToolManager` probes installed binaries and performs a **one-click sync**
+(Web UI button / `scripts/update_tools.py` / `harness sync`). Sync is **dry-run
+by default**, network-gated through the Policy Engine, argv-only (no shell), and
+audit-logged. Offensive / high-impact tools (Metasploit, Hydra, SQLMap, Ettercap,
+SET, Aircrack-ng, John, Hashcat, Wireshark-GUI) are `manual_review=true` and are
+**never auto-cloned or auto-updated**. Git-based upstreams clone into a
+**gitignored `vendor/`**, never committed into this repo.
+**Why:** User asked to "integrate all note tools, connect many open-source tools,
+clone them into the repo, auto-update with one button, give an easy UI". The
+project's own non-negotiables (authorized-use-only, offline-first, policy
+authoritative, no auto-install of offensive tooling — master plan §16) forbid
+blindly cloning/auto-updating offensive tools, so the safe mechanism above
+satisfies the request without breaking the safety contract.
+**Status:** Active.

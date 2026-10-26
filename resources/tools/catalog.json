@@ -1,0 +1,277 @@
+{
+  "catalogVersion": "1.0.0",
+  "description": "Authoritative tool catalog for the Offline Cybersecurity Harness Engine. Derived from the owner's study notes (notes/01_Kali_Tools) plus curated open-source extras. Risk/tier/manual_review flags gate what the harness may auto-manage. Offensive or high-impact tools are manual_review=true and are NEVER auto-cloned or auto-updated.",
+  "riskLegend": {
+    "PASSIVE": "read-only / observation",
+    "ACTIVE": "touches the target (scans)",
+    "INTRUSIVE": "may change state (exploit validation)",
+    "DESTRUCTIVE": "high impact; lab-only + explicit approval"
+  },
+  "tools": [
+    {
+      "tool_id": "nmap", "name": "Nmap", "category": "network_discovery",
+      "risk": "ACTIVE", "requires_network": true, "tier": "P1",
+      "binary": "nmap", "version_arg": "--version",
+      "source": "https://github.com/nmap/nmap", "license": "NPSL",
+      "update": {"method": "apt", "package": "nmap", "post": ["nmap --script-updatedb"]},
+      "auto_update": true, "manual_review": false,
+      "notes_path": "notes/01_Kali_Tools/03_Nmap.md",
+      "summary": "Host/port/service discovery and NSE scripting; XML import into the engine."
+    },
+    {
+      "tool_id": "netcat", "name": "Netcat", "category": "network_diagnostic",
+      "risk": "ACTIVE", "requires_network": true, "tier": "P2",
+      "binary": "nc", "version_arg": "-h",
+      "source": "https://salsa.debian.org/debian/netcat-openbsd", "license": "BSD",
+      "update": {"method": "apt", "package": "netcat-openbsd"},
+      "auto_update": true, "manual_review": false,
+      "notes_path": "notes/01_Kali_Tools/13_theHarvester_Netcat.md",
+      "summary": "TCP/UDP reachability diagnostics. No remote shells / arbitrary listeners."
+    },
+    {
+      "tool_id": "wireshark", "name": "Wireshark", "category": "packet_analysis",
+      "risk": "PASSIVE", "requires_network": false, "tier": "P3",
+      "binary": "wireshark", "version_arg": "--version",
+      "source": "https://gitlab.com/wireshark/wireshark", "license": "GPL-2.0",
+      "update": {"method": "apt", "package": "wireshark"},
+      "auto_update": true, "manual_review": true,
+      "notes_path": "notes/01_Kali_Tools/04_Wireshark_TShark.md",
+      "summary": "Manual GUI packet inspection and .pcap import. No unauthorised capture."
+    },
+    {
+      "tool_id": "tshark", "name": "TShark", "category": "packet_analysis",
+      "risk": "PASSIVE", "requires_network": false, "tier": "P3",
+      "binary": "tshark", "version_arg": "--version",
+      "source": "https://gitlab.com/wireshark/wireshark", "license": "GPL-2.0",
+      "update": {"method": "apt", "package": "tshark"},
+      "auto_update": true, "manual_review": false,
+      "notes_path": "notes/01_Kali_Tools/04_Wireshark_TShark.md",
+      "summary": "CLI packet analysis / protocol summaries on authorised interfaces only."
+    },
+    {
+      "tool_id": "theharvester", "name": "theHarvester", "category": "osint",
+      "risk": "PASSIVE", "requires_network": true, "tier": "P2",
+      "binary": "theHarvester", "version_arg": "--version",
+      "source": "https://github.com/laramies/theHarvester", "license": "GPL-2.0",
+      "update": {"method": "git", "source": "https://github.com/laramies/theHarvester"},
+      "auto_update": true, "manual_review": false,
+      "notes_path": "notes/01_Kali_Tools/13_theHarvester_Netcat.md",
+      "summary": "Passive OSINT: domains/subdomains from permitted public sources."
+    },
+    {
+      "tool_id": "recon-ng", "name": "Recon-ng", "category": "osint",
+      "risk": "PASSIVE", "requires_network": true, "tier": "P3",
+      "binary": "recon-ng", "version_arg": "--version",
+      "source": "https://github.com/lanmaster53/recon-ng", "license": "GPL-3.0",
+      "update": {"method": "git", "source": "https://github.com/lanmaster53/recon-ng"},
+      "auto_update": true, "manual_review": false,
+      "notes_path": "notes/01_Kali_Tools/15_Searchsploit_Recon-ng.md",
+      "summary": "Modular OSINT workspace; each data-provider module reviewed separately."
+    },
+    {
+      "tool_id": "searchsploit", "name": "Searchsploit", "category": "reference",
+      "risk": "PASSIVE", "requires_network": false, "tier": "P2",
+      "binary": "searchsploit", "version_arg": "--version",
+      "source": "https://gitlab.com/exploit-database/exploitdb", "license": "GPL-2.0",
+      "update": {"method": "git", "source": "https://gitlab.com/exploit-database/exploitdb"},
+      "auto_update": true, "manual_review": false,
+      "notes_path": "notes/01_Kali_Tools/15_Searchsploit_Recon-ng.md",
+      "summary": "Local Exploit-DB/CVE reference search. Read-only; never auto-exploits."
+    },
+    {
+      "tool_id": "nikto", "name": "Nikto", "category": "web_scan",
+      "risk": "ACTIVE", "requires_network": true, "tier": "P2",
+      "binary": "nikto", "version_arg": "-Version",
+      "source": "https://github.com/sullo/nikto", "license": "GPL-2.0",
+      "update": {"method": "git", "source": "https://github.com/sullo/nikto"},
+      "auto_update": true, "manual_review": false,
+      "notes_path": "notes/01_Kali_Tools/10_Nikto.md",
+      "summary": "Web server config assessment within domain scope + rate limits."
+    },
+    {
+      "tool_id": "gobuster", "name": "Gobuster", "category": "content_discovery",
+      "risk": "ACTIVE", "requires_network": true, "tier": "P2",
+      "binary": "gobuster", "version_arg": "version",
+      "source": "https://github.com/OJ/gobuster", "license": "Apache-2.0",
+      "update": {"method": "apt", "package": "gobuster"},
+      "auto_update": true, "manual_review": false,
+      "notes_path": "notes/01_Kali_Tools/11_Gobuster_Dirb.md",
+      "summary": "Directory/DNS discovery with thread/request caps and scope."
+    },
+    {
+      "tool_id": "dirb", "name": "Dirb", "category": "content_discovery",
+      "risk": "ACTIVE", "requires_network": true, "tier": "P3",
+      "binary": "dirb", "version_arg": null,
+      "source": "https://salsa.debian.org/pkg-security-team/dirb", "license": "GPL-2.0",
+      "update": {"method": "apt", "package": "dirb"},
+      "auto_update": true, "manual_review": false,
+      "notes_path": "notes/01_Kali_Tools/11_Gobuster_Dirb.md",
+      "summary": "Directory/URL discovery with safe profiles and request caps."
+    },
+    {
+      "tool_id": "wpscan", "name": "WPScan", "category": "web_scan",
+      "risk": "ACTIVE", "requires_network": true, "tier": "P2",
+      "binary": "wpscan", "version_arg": "--version",
+      "source": "https://github.com/wpscanteam/wpscan", "license": "WPScan-Public-Source",
+      "update": {"method": "gem", "package": "wpscan", "post": ["wpscan --update"]},
+      "auto_update": true, "manual_review": false,
+      "notes_path": "notes/01_Kali_Tools/12_WPScan.md",
+      "summary": "WordPress version/plugin/theme assessment. No password brute-force."
+    },
+    {
+      "tool_id": "enum4linux", "name": "Enum4linux", "category": "smb_enum",
+      "risk": "ACTIVE", "requires_network": true, "tier": "P3",
+      "binary": "enum4linux", "version_arg": null,
+      "source": "https://github.com/CiscoCXSecurity/enum4linux", "license": "GPL-2.0",
+      "update": {"method": "git", "source": "https://github.com/CiscoCXSecurity/enum4linux"},
+      "auto_update": true, "manual_review": false,
+      "notes_path": "notes/01_Kali_Tools/14_Enum4linux_SMBclient.md",
+      "summary": "SMB metadata enumeration (inventory only)."
+    },
+    {
+      "tool_id": "smbclient", "name": "SMBclient", "category": "smb_enum",
+      "risk": "ACTIVE", "requires_network": true, "tier": "P3",
+      "binary": "smbclient", "version_arg": "--version",
+      "source": "https://gitlab.com/samba-team/samba", "license": "GPL-3.0",
+      "update": {"method": "apt", "package": "smbclient"},
+      "auto_update": true, "manual_review": false,
+      "notes_path": "notes/01_Kali_Tools/14_Enum4linux_SMBclient.md",
+      "summary": "Approved share access / permission review. Read-only; no mass transfer."
+    },
+    {
+      "tool_id": "john", "name": "John the Ripper", "category": "hash_audit",
+      "risk": "INTRUSIVE", "requires_network": false, "tier": "P4",
+      "binary": "john", "version_arg": null,
+      "source": "https://github.com/openwall/john", "license": "GPL-2.0",
+      "update": {"method": "apt", "package": "john"},
+      "auto_update": false, "manual_review": true,
+      "notes_path": "notes/01_Kali_Tools/07_John_the_Ripper.md",
+      "summary": "Local synthetic/owned hash-strength audit in isolation only."
+    },
+    {
+      "tool_id": "hashcat", "name": "Hashcat", "category": "hash_audit",
+      "risk": "INTRUSIVE", "requires_network": false, "tier": "P4",
+      "binary": "hashcat", "version_arg": "--version",
+      "source": "https://github.com/hashcat/hashcat", "license": "MIT",
+      "update": {"method": "apt", "package": "hashcat"},
+      "auto_update": false, "manual_review": true,
+      "notes_path": "notes/01_Kali_Tools/08_Hashcat.md",
+      "summary": "GPU offline password audit. Not started at app launch; resource-bounded."
+    },
+    {
+      "tool_id": "sqlmap", "name": "SQLMap", "category": "web_exploit_lab",
+      "risk": "INTRUSIVE", "requires_network": true, "tier": "P4",
+      "binary": "sqlmap", "version_arg": "--version",
+      "source": "https://github.com/sqlmapproject/sqlmap", "license": "GPL-2.0",
+      "update": {"method": "git", "source": "https://github.com/sqlmapproject/sqlmap"},
+      "auto_update": false, "manual_review": true,
+      "notes_path": "notes/01_Kali_Tools/09_SQLMap.md",
+      "summary": "SQLi investigation in approved lab only. No dumping/tampering/takeover."
+    },
+    {
+      "tool_id": "hydra", "name": "THC-Hydra", "category": "auth_lab",
+      "risk": "INTRUSIVE", "requires_network": true, "tier": "P5",
+      "binary": "hydra", "version_arg": "-h",
+      "source": "https://github.com/vanhauser-thc/thc-hydra", "license": "AGPL-3.0",
+      "update": {"method": "apt", "package": "hydra"},
+      "auto_update": false, "manual_review": true,
+      "notes_path": "notes/01_Kali_Tools/02_THC-Hydra.md",
+      "summary": "Lab/manual only authentication-strength research. No bulk online guessing."
+    },
+    {
+      "tool_id": "aircrack-ng", "name": "Aircrack-ng Suite", "category": "wireless_lab",
+      "risk": "INTRUSIVE", "requires_network": false, "tier": "P5",
+      "binary": "aircrack-ng", "version_arg": "--help",
+      "source": "https://github.com/aircrack-ng/aircrack-ng", "license": "GPL-2.0",
+      "update": {"method": "apt", "package": "aircrack-ng"},
+      "auto_update": false, "manual_review": true,
+      "notes_path": "notes/01_Kali_Tools/05_Aircrack-ng_Suite.md",
+      "summary": "Authorised Wi-Fi radio testing. Physical authorisation + adapter required."
+    },
+    {
+      "tool_id": "ettercap", "name": "Ettercap", "category": "mitm_lab",
+      "risk": "DESTRUCTIVE", "requires_network": true, "tier": "P5",
+      "binary": "ettercap", "version_arg": "--version",
+      "source": "https://github.com/Ettercap/ettercap", "license": "GPL-2.0",
+      "update": {"method": "apt", "package": "ettercap-graphical"},
+      "auto_update": false, "manual_review": true,
+      "notes_path": "notes/01_Kali_Tools/16_Ettercap.md",
+      "summary": "Controlled MITM simulation, lab-only. No unattended interception."
+    },
+    {
+      "tool_id": "metasploit", "name": "Metasploit Framework", "category": "exploit_lab",
+      "risk": "DESTRUCTIVE", "requires_network": true, "tier": "P5",
+      "binary": "msfconsole", "version_arg": "--version",
+      "source": "https://github.com/rapid7/metasploit-framework", "license": "BSD-3-Clause",
+      "update": {"method": "apt", "package": "metasploit-framework"},
+      "auto_update": false, "manual_review": true,
+      "notes_path": "notes/01_Kali_Tools/01_Metasploit_Framework.md",
+      "summary": "Manual validation evidence only. No autonomous exploitation/post-exploit."
+    },
+    {
+      "tool_id": "set", "name": "Social Engineering Toolkit", "category": "awareness_lab",
+      "risk": "DESTRUCTIVE", "requires_network": true, "tier": "P5",
+      "binary": "setoolkit", "version_arg": null,
+      "source": "https://github.com/trustedsec/social-engineer-toolkit", "license": "SET-License",
+      "update": {"method": "git", "source": "https://github.com/trustedsec/social-engineer-toolkit"},
+      "auto_update": false, "manual_review": true,
+      "notes_path": "notes/01_Kali_Tools/17_Social_Engineering_Toolkit_SET.md",
+      "summary": "Awareness-training metadata only. No real credential harvesting/campaigns."
+    },
+
+    {
+      "tool_id": "sslyze", "name": "SSLyze", "category": "tls_check",
+      "risk": "ACTIVE", "requires_network": true, "tier": "extra",
+      "binary": "sslyze", "version_arg": "--version",
+      "source": "https://github.com/nabla-c0d3/sslyze", "license": "AGPL-3.0",
+      "update": {"method": "pipx", "package": "sslyze"},
+      "auto_update": true, "manual_review": false, "notes_path": null,
+      "summary": "TLS configuration analysis for authorised hosts (community add-on)."
+    },
+    {
+      "tool_id": "testssl", "name": "testssl.sh", "category": "tls_check",
+      "risk": "ACTIVE", "requires_network": true, "tier": "extra",
+      "binary": "testssl.sh", "version_arg": "--version",
+      "source": "https://github.com/drwetter/testssl.sh", "license": "GPL-2.0",
+      "update": {"method": "git", "source": "https://github.com/drwetter/testssl.sh"},
+      "auto_update": true, "manual_review": false, "notes_path": null,
+      "summary": "TLS/cipher checks for authorised hosts (community add-on)."
+    },
+    {
+      "tool_id": "nuclei", "name": "Nuclei", "category": "templated_scan",
+      "risk": "ACTIVE", "requires_network": true, "tier": "extra",
+      "binary": "nuclei", "version_arg": "-version",
+      "source": "https://github.com/projectdiscovery/nuclei", "license": "MIT",
+      "update": {"method": "script", "source": "https://github.com/projectdiscovery/nuclei"},
+      "auto_update": true, "manual_review": true, "notes_path": null,
+      "summary": "Template-based checks; passive/mild templates only via explicit allowlist."
+    },
+    {
+      "tool_id": "trivy", "name": "Trivy", "category": "supply_chain",
+      "risk": "PASSIVE", "requires_network": true, "tier": "extra",
+      "binary": "trivy", "version_arg": "--version",
+      "source": "https://github.com/aquasecurity/trivy", "license": "Apache-2.0",
+      "update": {"method": "apt", "package": "trivy"},
+      "auto_update": true, "manual_review": false, "notes_path": null,
+      "summary": "Container/dependency vulnerability scanning (community add-on)."
+    },
+    {
+      "tool_id": "gitleaks", "name": "Gitleaks", "category": "secrets",
+      "risk": "PASSIVE", "requires_network": false, "tier": "extra",
+      "binary": "gitleaks", "version_arg": "version",
+      "source": "https://github.com/gitleaks/gitleaks", "license": "MIT",
+      "update": {"method": "script", "source": "https://github.com/gitleaks/gitleaks"},
+      "auto_update": true, "manual_review": false, "notes_path": null,
+      "summary": "Static secret detection in owned repositories (community add-on)."
+    },
+    {
+      "tool_id": "whois", "name": "WHOIS/RDAP", "category": "ip_intelligence",
+      "risk": "PASSIVE", "requires_network": true, "tier": "extra",
+      "binary": "whois", "version_arg": "--version",
+      "source": "https://salsa.debian.org/md/whois", "license": "GPL-2.0",
+      "update": {"method": "apt", "package": "whois"},
+      "auto_update": true, "manual_review": false, "notes_path": null,
+      "summary": "Passive IP/domain registration lookups for the IP-intelligence module."
+    }
+  ]
+}

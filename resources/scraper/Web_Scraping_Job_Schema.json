@@ -1,0 +1,465 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/secforge-scrape-job-1.0.0.schema.json",
+  "title": "SecForge authorised web scraping job configuration",
+  "description": "Shape validation only. Runtime must additionally perform scope, URL/IP, redirect, consent, robots, rate-limit, and storage checks.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "jobName": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "single_url",
+            "url_list",
+            "json_file"
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 1000
+        },
+        "jsonFilePath": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "mode",
+        "url",
+        "urls",
+        "jsonFilePath"
+      ]
+    },
+    "authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "scopeId": {
+          "type": "string"
+        },
+        "ownerApproved": {
+          "type": "boolean"
+        },
+        "purpose": {
+          "type": "string"
+        },
+        "allowedDomains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "maxItems": 100
+        },
+        "allowPrivateNetwork": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "scopeId",
+        "ownerApproved",
+        "purpose",
+        "allowedDomains",
+        "allowPrivateNetwork"
+      ]
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "GET"
+          ]
+        },
+        "headers": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 60000
+        },
+        "credentialSecretRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "method",
+        "headers",
+        "timeoutMs",
+        "credentialSecretRef"
+      ]
+    },
+    "fetch": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "html",
+            "json"
+          ]
+        },
+        "renderJavascript": {
+          "type": "boolean"
+        },
+        "waitForSelector": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "userAgent": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "mode",
+        "renderJavascript",
+        "waitForSelector",
+        "userAgent"
+      ]
+    },
+    "crawl": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "maxDepth": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "maxPages": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        },
+        "sameOriginOnly": {
+          "type": "boolean"
+        },
+        "obeyRobotsTxt": {
+          "type": "boolean"
+        },
+        "respectNoFollow": {
+          "type": "boolean"
+        },
+        "includeUrlPatterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100
+        },
+        "excludeUrlPatterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100
+        }
+      },
+      "required": [
+        "enabled",
+        "maxDepth",
+        "maxPages",
+        "sameOriginOnly",
+        "obeyRobotsTxt",
+        "respectNoFollow",
+        "includeUrlPatterns",
+        "excludeUrlPatterns"
+      ]
+    },
+    "pagination": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "none",
+            "next_link",
+            "page_parameter",
+            "cursor"
+          ]
+        },
+        "nextLinkSelector": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "maxPages": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        }
+      },
+      "required": [
+        "mode",
+        "nextLinkSelector",
+        "maxPages"
+      ]
+    },
+    "extraction": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "responseType": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "html",
+            "json"
+          ]
+        },
+        "html": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "itemSelector": {
+              "type": "string"
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "selector": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string",
+                    "enum": [
+                      "text",
+                      "html",
+                      "href",
+                      "src",
+                      "content",
+                      "value"
+                    ]
+                  },
+                  "dataType": {
+                    "type": "string",
+                    "enum": [
+                      "string",
+                      "number",
+                      "boolean",
+                      "date",
+                      "url"
+                    ]
+                  },
+                  "required": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "name",
+                  "selector",
+                  "value",
+                  "dataType",
+                  "required"
+                ]
+              },
+              "minItems": 1,
+              "maxItems": 200
+            }
+          },
+          "required": [
+            "itemSelector",
+            "fields"
+          ]
+        },
+        "json": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "itemsJsonPath": {
+              "type": "string"
+            },
+            "fieldPaths": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "itemsJsonPath",
+            "fieldPaths"
+          ]
+        },
+        "deduplicateBy": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20
+        }
+      },
+      "required": [
+        "responseType",
+        "html",
+        "json",
+        "deduplicateBy"
+      ]
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "requestsPerSecond": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 10
+        },
+        "concurrency": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        },
+        "maxResponseBytes": {
+          "type": "integer",
+          "minimum": 1024,
+          "maximum": 10485760
+        },
+        "maxRecords": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "maxDurationSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600
+        },
+        "retryCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "retryBackoffMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 60000
+        }
+      },
+      "required": [
+        "requestsPerSecond",
+        "concurrency",
+        "maxResponseBytes",
+        "maxRecords",
+        "maxDurationSeconds",
+        "retryCount",
+        "retryBackoffMs"
+      ]
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "collectPersonalData": {
+          "type": "boolean"
+        },
+        "storeRawHtml": {
+          "type": "boolean"
+        },
+        "redactSecrets": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "collectPersonalData",
+        "storeRawHtml",
+        "redactSecrets"
+      ]
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "type": "string",
+          "enum": [
+            "json",
+            "jsonl",
+            "csv"
+          ]
+        },
+        "relativePath": {
+          "type": "string"
+        },
+        "includeSourceUrl": {
+          "type": "boolean"
+        },
+        "includeFetchedAt": {
+          "type": "boolean"
+        },
+        "includeExtractionEvidence": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "format",
+        "relativePath",
+        "includeSourceUrl",
+        "includeFetchedAt",
+        "includeExtractionEvidence"
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "jobName",
+    "input",
+    "authorization",
+    "request",
+    "fetch",
+    "crawl",
+    "pagination",
+    "extraction",
+    "limits",
+    "privacy",
+    "output"
+  ]
+}

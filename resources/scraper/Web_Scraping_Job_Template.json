@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1.0.0",
+  "jobName": "Example public catalog extraction",
+  "description": "Safe demonstration configuration; replace example.com with an owned or permitted site and choose selectors that exist on that site.",
+  "input": {
+    "mode": "single_url",
+    "url": "https://example.com/catalog",
+    "urls": [],
+    "jsonFilePath": null
+  },
+  "authorization": {
+    "scopeId": "demo-approved-scope",
+    "ownerApproved": true,
+    "purpose": "permitted_public_data_extraction",
+    "allowedDomains": [
+      "example.com"
+    ],
+    "allowPrivateNetwork": false
+  },
+  "request": {
+    "method": "GET",
+    "headers": {
+      "Accept": "text/html, application/json"
+    },
+    "timeoutMs": 10000,
+    "credentialSecretRef": null
+  },
+  "fetch": {
+    "mode": "auto",
+    "renderJavascript": false,
+    "waitForSelector": null,
+    "userAgent": "SecForgeAuthorizedCrawler/1.0 (+contact-configured-in-app)"
+  },
+  "crawl": {
+    "enabled": false,
+    "maxDepth": 0,
+    "maxPages": 10,
+    "sameOriginOnly": true,
+    "obeyRobotsTxt": true,
+    "respectNoFollow": true,
+    "includeUrlPatterns": [],
+    "excludeUrlPatterns": [
+      "/logout",
+      "/account",
+      "/checkout"
+    ]
+  },
+  "pagination": {
+    "mode": "next_link",
+    "nextLinkSelector": "a.next",
+    "maxPages": 3
+  },
+  "extraction": {
+    "responseType": "auto",
+    "html": {
+      "itemSelector": ".product-card",
+      "fields": [
+        {
+          "name": "title",
+          "selector": "h2",
+          "value": "text",
+          "dataType": "string",
+          "required": true
+        },
+        {
+          "name": "price",
+          "selector": ".price",
+          "value": "text",
+          "dataType": "string",
+          "required": false
+        },
+        {
+          "name": "productUrl",
+          "selector": "a",
+          "value": "href",
+          "dataType": "url",
+          "required": false
+        }
+      ]
+    },
+    "json": {
+      "itemsJsonPath": "$.items[*]",
+      "fieldPaths": {
+        "title": "$.title",
+        "price": "$.price",
+        "productUrl": "$.url"
+      }
+    },
+    "deduplicateBy": [
+      "productUrl"
+    ]
+  },
+  "limits": {
+    "requestsPerSecond": 0.5,
+    "concurrency": 1,
+    "maxResponseBytes": 2097152,
+    "maxRecords": 500,
+    "maxDurationSeconds": 120,
+    "retryCount": 2,
+    "retryBackoffMs": 2000
+  },
+  "privacy": {
+    "collectPersonalData": false,
+    "storeRawHtml": false,
+    "redactSecrets": true
+  },
+  "output": {
+    "format": "json",
+    "relativePath": "exports/catalog.json",
+    "includeSourceUrl": true,
+    "includeFetchedAt": true,
+    "includeExtractionEvidence": true
+  }
+}
