@@ -7,7 +7,7 @@
 > lives in `logs/` (daily) and `DECISION_LOG.md` (decisions); this file is the
 > distilled state, not the archive.
 
-**Last updated:** 2026-10-26 (Session 5)
+**Last updated:** 2026-10-26 (Session 6)
 
 ---
 
@@ -31,9 +31,10 @@ per-customer enterprise/government licensing. Full detail:
   harness** (`harness/`) with a full test suite, Docker, and GitHub Actions CI.
 - **What works now:** offline-first harness lifecycle, the **authoritative Policy
   Engine** (scope/risk/approval/network/emergency-stop), append-only audit log,
-  tool registry, AI model-adapter interface + offline stub + **DeepSeek adapter
-  scaffold** (offline fallback; real inference not wired yet), and a terminal CLI.
-  Verified: ruff clean, mypy clean, **37 pytest tests pass**.
+  tool registry, AI model-adapter interface + offline stub + a **working DeepSeek
+  local-runtime adapter** (OpenAI-compatible endpoint via stdlib urllib; offline
+  fallback; model output treated as untrusted), and a terminal CLI.
+  Verified: ruff clean, mypy clean, **50 pytest tests pass**.
 - **Architecture:** finalized in `project/architecture/COMPONENT_ARCHITECTURE.md`.
 - **Automation:** CI runs ruff + mypy + pytest on **every push** (py3.11/3.12);
   Docker build + offline smoke test gates **main**.
@@ -68,17 +69,18 @@ Highlights:
 - **Testing mandatory (pytest); every module has tests.** *(D-0011)*
 - **Docker + docker-compose; multi-stage, non-root runtime.** *(D-0012)*
 - **CI = GitHub Actions on every push; Docker build gates main.** *(D-0013)*
+- **DeepSeek = local OpenAI-compatible runtime adapter (not vendored).** *(D-0014)*
+- **Model output untrusted; defensive parsing, fail-closed risk.** *(D-0015)*
 
 ## 5. Open questions / not yet decided
 
 - Primary OS for initial development (Windows x86-64 vs Linux x86-64).
 - Orchestration language for the *performance core* (Rust vs Go vs C/C++) — note
   the Phase-0 *harness* layer is Python by D-0010; this is about the native core.
-- DeepSeek: vendor a specific repo into `harness/ai/` vs. keep growing the adapter
-  scaffold + a local inference runtime (e.g. llama.cpp/ollama-style). **Ask user.**
-- Which DeepSeek-compatible local runtime to use.
 - Exact tool plugin contract / interface schema.
 - MVP tool: start with IP intelligence module (decided direction) — scope of v0.
+- Which specific DeepSeek model to standardize on (deepseek-r1 vs deepseek-coder)
+  and licence verification before any commercial distribution.
 
 ## 6. Where things live
 
@@ -95,17 +97,16 @@ Highlights:
 
 ## 7. Next engineering priorities
 
-**Done (Session 5):** ✅ component architecture finalized · ✅ offline harness
-lifecycle · ✅ authorization/policy system · ✅ tool registry skeleton · ✅
-terminal UI (basic) · ✅ Docker + CI + tests environment · ✅ DeepSeek adapter
-scaffold.
+**Done:** ✅ component architecture finalized · ✅ offline harness lifecycle · ✅
+authorization/policy system · ✅ tool registry skeleton · ✅ terminal UI (basic) ·
+✅ Docker + CI + tests environment · ✅ **DeepSeek local-runtime adapter (working,
+offline-first, untrusted-output safe)**.
 
 **Next:**
-1. Decide DeepSeek integration path (vendor vs local-runtime adapter) — needs user.
-2. SQLite persistence for audit log + projects + scope (currently in-memory).
-3. First **IP intelligence engine** (the MVP research module).
-4. **Tool plugin contract** — formal input/output schema + execution adapter.
-5. Sandboxed **execution runtime** (process/container isolation).
-6. **MCP server** (localhost, authenticated).
-7. Rust/Assembly native engine interface + first ARM64/x86-64 module.
-8. Pick primary OS + set up ASM dev environments.
+1. SQLite persistence for audit log + projects + scope (currently in-memory).
+2. First **IP intelligence engine** (the MVP research module).
+3. **Tool plugin contract** — formal input/output schema + execution adapter.
+4. Sandboxed **execution runtime** (process/container isolation).
+5. **MCP server** (localhost, authenticated).
+6. Rust/Assembly native engine interface + first ARM64/x86-64 module.
+7. Pick primary OS + set up ASM dev environments.

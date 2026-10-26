@@ -1,10 +1,7 @@
-"""Tests for the AI model adapters (stub + DeepSeek scaffold)."""
+"""Tests for the offline stub adapter. (DeepSeek has its own test module.)"""
 
 from __future__ import annotations
 
-import pytest
-
-from harness.ai.deepseek_adapter import DeepSeekAdapter, DeepSeekConfig
 from harness.ai.local_stub import LocalStubAdapter
 
 
@@ -26,26 +23,3 @@ def test_stub_defaults_to_passive_local_plan() -> None:
 
 def test_stub_analyze() -> None:
     assert "2" in LocalStubAdapter().analyze([{}, {}])
-
-
-def test_deepseek_falls_back_when_unconfigured() -> None:
-    adapter = DeepSeekAdapter()
-    assert not adapter.is_ready
-    # Offline-first: unconfigured adapter still plans, via the fallback.
-    wf = adapter.plan("discover services")
-    assert wf.steps
-
-
-def test_deepseek_not_ready_without_network_flag() -> None:
-    adapter = DeepSeekAdapter(DeepSeekConfig(endpoint="http://localhost:11434"))
-    assert not adapter.is_ready  # endpoint set but allow_network is False
-
-
-def test_deepseek_ready_requires_endpoint_and_network() -> None:
-    adapter = DeepSeekAdapter(
-        DeepSeekConfig(endpoint="http://localhost:11434", allow_network=True)
-    )
-    assert adapter.is_ready
-    # Real inference is not wired in yet.
-    with pytest.raises(NotImplementedError):
-        adapter.plan("discover services")
