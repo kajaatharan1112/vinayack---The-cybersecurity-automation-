@@ -64,3 +64,34 @@ deliverable.
 artifacts go under `project/`.
 **Why:** User requirement — do not disturb the notes.
 **Status:** Active.
+
+### D-0010 · 2026-10-26 · Phase-0 harness/orchestration MVP in Python (stdlib-only core)
+**Decision:** Build the Phase-0 harness + orchestration layer in Python 3.11+.
+Core modules (policy, audit, lifecycle, registry) use the standard library only,
+so the system and its tests run fully offline with no third-party runtime deps.
+**Why:** Fastest path to a working, CI-gated, testable foundation; hermetic
+offline tests match the offline-first requirement. Rust/Assembly stay reserved
+for performance-critical and low-level engines (later phases), plugged in behind
+the registry's stable adapter interface.
+**Status:** Active.
+
+### D-0011 · 2026-10-26 · Testing is mandatory; pytest is the framework
+**Decision:** Every module ships with tests under `tests/`. No module merges
+without a test. pytest + coverage.
+**Why:** User requirement — "ella work ikkum test case mukiyam". Government
+project needs a verifiable safety core.
+**Status:** Active.
+
+### D-0012 · 2026-10-26 · Containerized with Docker + docker-compose
+**Decision:** Multi-stage Dockerfile (test stage + slim non-root runtime stage);
+docker-compose runs the harness offline (`network_mode: none`) and the test suite.
+**Why:** Reproducible, isolated, flexible environment; least privilege.
+**Status:** Active.
+
+### D-0013 · 2026-10-26 · CI/CD via GitHub Actions; main is the release gate
+**Decision:** `.github/workflows/ci.yml` runs ruff + mypy + pytest on every push
+(py3.11 & 3.12) and on PRs to main; a Docker build + offline smoke-test job gates
+the main line. Concurrency cancels superseded runs.
+**Why:** User requirement — "Testing automation romba mukiyam ... push panum
+pothum main ikku pipeline run akanum".
+**Status:** Active.

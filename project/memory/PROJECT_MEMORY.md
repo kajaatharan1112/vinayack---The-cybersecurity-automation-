@@ -7,7 +7,7 @@
 > lives in `logs/` (daily) and `DECISION_LOG.md` (decisions); this file is the
 > distilled state, not the archive.
 
-**Last updated:** 2026-10-26
+**Last updated:** 2026-10-26 (Session 5)
 
 ---
 
@@ -26,10 +26,17 @@ per-customer enterprise/government licensing. Full detail:
 
 ## 2. Current status
 
-- **Phase:** Planning & Research (Phase 0). No product code written yet.
-- **Repo today:** cybersecurity study `notes/` (322 md files) + this `project/`
-  planning space. No harness implementation exists.
-- **Goal of the moment:** we are still **planning** — not yet building the engine.
+- **Phase:** Phase 0 — Foundation **in progress** (moved past pure planning).
+- **Repo today:** study `notes/`, `project/` planning space, **and a runnable
+  harness** (`harness/`) with a full test suite, Docker, and GitHub Actions CI.
+- **What works now:** offline-first harness lifecycle, the **authoritative Policy
+  Engine** (scope/risk/approval/network/emergency-stop), append-only audit log,
+  tool registry, AI model-adapter interface + offline stub + **DeepSeek adapter
+  scaffold** (offline fallback; real inference not wired yet), and a terminal CLI.
+  Verified: ruff clean, mypy clean, **37 pytest tests pass**.
+- **Architecture:** finalized in `project/architecture/COMPONENT_ARCHITECTURE.md`.
+- **Automation:** CI runs ruff + mypy + pytest on **every push** (py3.11/3.12);
+  Docker build + offline smoke test gates **main**.
 
 ## 3. Hard rules that must never drift (the project's non-negotiables)
 
@@ -57,11 +64,18 @@ Highlights:
 - AI foundation = DeepSeek-compatible, multi-model adapter, local inference.
 - Initial DB = SQLite; custom MCP server bound to localhost.
 - Business model = per-customer licensing.
+- **Phase-0 harness MVP in Python, core stdlib-only (offline/hermetic).** *(D-0010)*
+- **Testing mandatory (pytest); every module has tests.** *(D-0011)*
+- **Docker + docker-compose; multi-stage, non-root runtime.** *(D-0012)*
+- **CI = GitHub Actions on every push; Docker build gates main.** *(D-0013)*
 
 ## 5. Open questions / not yet decided
 
 - Primary OS for initial development (Windows x86-64 vs Linux x86-64).
-- Orchestration language choice (Rust vs Go vs C/C++).
+- Orchestration language for the *performance core* (Rust vs Go vs C/C++) — note
+  the Phase-0 *harness* layer is Python by D-0010; this is about the native core.
+- DeepSeek: vendor a specific repo into `harness/ai/` vs. keep growing the adapter
+  scaffold + a local inference runtime (e.g. llama.cpp/ollama-style). **Ask user.**
 - Which DeepSeek-compatible local runtime to use.
 - Exact tool plugin contract / interface schema.
 - MVP tool: start with IP intelligence module (decided direction) — scope of v0.
@@ -71,16 +85,27 @@ Highlights:
 | What | Path |
 |---|---|
 | Master plan (full spec) | `project/PROJECT_MASTER_PLAN.md` |
+| Component architecture (finalized) | `project/architecture/COMPONENT_ARCHITECTURE.md` |
 | This memory (project brain) | `project/memory/PROJECT_MEMORY.md` |
 | Decision log | `project/memory/DECISION_LOG.md` |
 | Daily work logs | `project/memory/logs/YYYY-MM-DD.md` |
 | How to use/update memory | `CLAUDE.md` (repo root) |
+| Harness code | `harness/` · tests in `tests/` · CI in `.github/workflows/` |
 | Study notes (do not disturb) | `notes/` |
 
-## 7. Next engineering priorities (from the plan, §31)
+## 7. Next engineering priorities
 
-1. Finalize component architecture → 2. Pick primary OS → 3. Evaluate DeepSeek
-local runtime → 4. Pick orchestration language → 5. Set up ASM dev environments →
-6. Define tool plugin contract → 7. Define authorization/policy system →
-8. Offline harness lifecycle → 9. First IP intelligence engine → 10. Initial MCP
-server → 11. Terminal UI → 12. First desktop dashboard.
+**Done (Session 5):** ✅ component architecture finalized · ✅ offline harness
+lifecycle · ✅ authorization/policy system · ✅ tool registry skeleton · ✅
+terminal UI (basic) · ✅ Docker + CI + tests environment · ✅ DeepSeek adapter
+scaffold.
+
+**Next:**
+1. Decide DeepSeek integration path (vendor vs local-runtime adapter) — needs user.
+2. SQLite persistence for audit log + projects + scope (currently in-memory).
+3. First **IP intelligence engine** (the MVP research module).
+4. **Tool plugin contract** — formal input/output schema + execution adapter.
+5. Sandboxed **execution runtime** (process/container isolation).
+6. **MCP server** (localhost, authenticated).
+7. Rust/Assembly native engine interface + first ARM64/x86-64 module.
+8. Pick primary OS + set up ASM dev environments.
